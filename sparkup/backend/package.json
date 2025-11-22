@@ -1,8 +1,0 @@
-{
-  "name": "sparkup-backend",
-  "type": "module",
-  "dependencies": {
-    "express": "^4.19.0",
-    "cors": "^2.8.5"
-  }
-}
