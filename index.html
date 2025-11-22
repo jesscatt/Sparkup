@@ -1,107 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>BrandAI – Crie Sua Marca com Inteligência Artificial</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <style>
-    /* Reset e configurações gerais */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+    
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
     
-    :root {
-      --primary: #6366f1;
-      --primary-dark: #4f46e5;
-      --primary-light: #8b5cf6;
-      --secondary: #06b6d4;
-      --dark: #0f172a;
-      --darker: #020617;
-      --light: #f8fafc;
-      --gray: #64748b;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --danger: #ef4444;
-    }
-    
     body {
-      font-family: 'Exo 2', sans-serif;
-      background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, #1e293b 100%);
-      color: var(--light);
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+      color: #f8fafc;
       overflow-x: hidden;
       min-height: 100vh;
-      line-height: 1.6;
-    }
-    
-    /* Container principal */
-    .container {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      position: relative;
-    }
-    
-    /* Overlay para melhor contraste */
-    .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(2, 6, 23, 0.7);
-      z-index: 1;
-    }
-    
-    /* Conteúdo principal */
-    .content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      max-width: 800px;
-      width: 100%;
-      animation: fadeInUp 1s ease-out;
-    }
-    
-    .logo {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 4.5rem;
-      font-weight: 900;
-      margin-bottom: 25px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary-light));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
-      animation: glow 3s ease-in-out infinite alternate, float 6s ease-in-out infinite;
-      position: relative;
-    }
-    
-    .logo::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 200px;
-      height: 4px;
-      background: linear-gradient(90deg, transparent, var(--primary), transparent);
-      border-radius: 2px;
     }
     
     @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    @keyframes glow {
       0%, 100% {
-        transform: translateY(0);
+        text-shadow: 0 0 20px rgba(139, 92, 246, 0.4),
+                     0 0 30px rgba(6, 182, 212, 0.3),
+                     0 0 40px rgba(168, 85, 247, 0.2);
       }
       50% {
-        transform: translateY(-10px);
+        text-shadow: 0 0 30px rgba(139, 92, 246, 0.6),
+                     0 0 40px rgba(6, 182, 212, 0.5),
+                     0 0 50px rgba(168, 85, 247, 0.4);
       }
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 5px 20px rgba(139, 92, 246, 0.4); }
+      50% { box-shadow: 0 5px 30px rgba(139, 92, 246, 0.7); }
+    }
+    
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     
     @keyframes fadeInUp {
@@ -115,321 +73,6 @@
       }
     }
     
-    @keyframes glow {
-      from {
-        text-shadow: 0 0 20px rgba(99, 102, 241, 0.4),
-                     0 0 30px rgba(6, 182, 212, 0.3),
-                     0 0 40px rgba(139, 92, 246, 0.2);
-      }
-      to {
-        text-shadow: 0 0 30px rgba(99, 102, 241, 0.6),
-                     0 0 40px rgba(6, 182, 212, 0.4),
-                     0 0 50px rgba(139, 92, 246, 0.3);
-      }
-    }
-    
-    .tagline {
-      font-size: 1.4rem;
-      margin-bottom: 50px;
-      line-height: 1.7;
-      background: rgba(15, 23, 42, 0.7);
-      padding: 25px 35px;
-      border-radius: 20px;
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(99, 102, 241, 0.2);
-      color: #e2e8f0;
-      position: relative;
-      overflow: hidden;
-      animation: fadeIn 1.5s ease-out 0.3s both;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    }
-    
-    .tagline::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
-      animation: shimmer 6s infinite;
-    }
-    
-    @keyframes shimmer {
-      0% {
-        left: -100%;
-      }
-      100% {
-        left: 100%;
-      }
-    }
-    
-    .btn {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: #ffffff;
-      padding: 18px 50px;
-      text-decoration: none;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 1.2rem;
-      border: none;
-      cursor: pointer;
-      transition: all 0.4s ease;
-      box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      font-family: 'Orbitron', sans-serif;
-      letter-spacing: 1px;
-      animation: pulse 2s infinite;
-    }
-    
-    @keyframes pulse {
-      0% {
-        box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
-      }
-      50% {
-        box-shadow: 0 5px 30px rgba(99, 102, 241, 0.7);
-      }
-      100% {
-        box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
-      }
-    }
-    
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: 0.5s;
-    }
-    
-    .btn:hover::before {
-      left: 100%;
-    }
-    
-    .btn:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.6);
-      background: linear-gradient(135deg, var(--primary-light), var(--primary));
-    }
-    
-    /* Efeitos de partículas */
-    .particles {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-    }
-    
-    .particle {
-      position: absolute;
-      border-radius: 50%;
-      animation: float 15s infinite linear;
-      pointer-events: none;
-    }
-    
-    /* Efeitos de brilho */
-    .glow-effect {
-      position: fixed;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      filter: blur(60px);
-      z-index: 0;
-      animation: moveGlow 20s infinite alternate ease-in-out;
-      pointer-events: none;
-      opacity: 0.5;
-    }
-    
-    .glow-effect:nth-child(1) {
-      top: 10%;
-      left: 10%;
-      background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
-    }
-    
-    .glow-effect:nth-child(2) {
-      bottom: 10%;
-      right: 10%;
-      background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
-      animation-delay: -10s;
-    }
-    
-    .glow-effect:nth-child(3) {
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
-      animation-delay: -5s;
-      width: 200px;
-      height: 200px;
-    }
-    
-    @keyframes moveGlow {
-      0% {
-        transform: translate(0, 0) scale(1);
-      }
-      100% {
-        transform: translate(100px, 100px) scale(1.2);
-      }
-    }
-    
-    /* Formulário - Escondido inicialmente */
-    .form-section {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(2, 6, 23, 0.95);
-      z-index: 1000;
-      overflow-y: auto;
-      padding: 20px;
-      animation: fadeIn 0.5s ease-out;
-    }
-    
-    .form-section.active {
-      display: block;
-    }
-    
-    .form-container {
-      max-width: 900px;
-      margin: 40px auto;
-      background: rgba(15, 23, 42, 0.9);
-      backdrop-filter: blur(25px);
-      border-radius: 25px;
-      padding: 40px;
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .form-container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 5px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-    }
-    
-    .form-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-      text-align: center;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    
-    .form-subtitle {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #94a3b8;
-      font-size: 1.1rem;
-    }
-    
-    /* Barra de progresso */
-    .progress-container {
-      width: 100%;
-      background: rgba(30, 41, 59, 0.5);
-      border-radius: 10px;
-      margin-bottom: 40px;
-      overflow: hidden;
-      height: 12px;
-    }
-    
-    .progress-bar {
-      height: 100%;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      border-radius: 10px;
-      width: 0%;
-      transition: width 0.5s ease;
-      position: relative;
-    }
-    
-    .progress-steps {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
-      margin-bottom: 30px;
-    }
-    
-    .progress-step {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      flex: 1;
-      position: relative;
-    }
-    
-    .step-indicator {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #334155;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 8px;
-      font-weight: bold;
-      color: #94a3b8;
-      border: 2px solid #475569;
-      transition: all 0.3s ease;
-      z-index: 2;
-    }
-    
-    .step-indicator.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary-light);
-      box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
-    }
-    
-    .step-indicator.completed {
-      background: var(--success);
-      color: white;
-      border-color: var(--success);
-    }
-    
-    .step-label {
-      font-size: 0.9rem;
-      color: #94a3b8;
-      text-align: center;
-    }
-    
-    .step-label.active {
-      color: var(--primary);
-      font-weight: 600;
-    }
-    
-    /* Grupos de formulário */
-    .form-step {
-      display: none;
-      animation: fadeIn 0.5s ease-out;
-    }
-    
-    .form-step.active {
-      display: block;
-    }
-    
-    .form-group {
-      margin-bottom: 25px;
-      position: relative;
-      animation: slideIn 0.5s ease-out;
-    }
-    
     @keyframes slideIn {
       from {
         opacity: 0;
@@ -441,1129 +84,691 @@
       }
     }
     
-    label {
-      display: block;
-      margin-bottom: 10px;
-      font-weight: 600;
-      color: #e2e8f0;
-      font-size: 1.1rem;
+    @keyframes moveGlow {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(100px, 100px) scale(1.2); }
     }
     
-    .input-hint {
-      font-size: 0.85rem;
-      color: #94a3b8;
-      margin-top: 5px;
-      margin-bottom: 10px;
-    }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .animate-glow { animation: glow 3s ease-in-out infinite alternate; }
+    .animate-pulse-glow { animation: pulse-glow 2s infinite; }
+    .animate-spin { animation: spin 1.5s linear infinite; }
+    .animate-fade-in { animation: fadeIn 0.5s ease-out; }
+    .animate-fade-in-up { animation: fadeInUp 1s ease-out; }
+    .animate-slide-in { animation: slideIn 0.5s ease-out; }
     
-    input, textarea, select {
-      width: 100%;
-      padding: 16px 20px;
-      border-radius: 12px;
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      background: rgba(30, 41, 59, 0.7);
-      color: #f1f5f9;
-      font-family: 'Exo 2', sans-serif;
-      transition: all 0.3s ease;
-      font-size: 1rem;
-    }
+    .hidden { display: none !important; }
     
-    input:focus, textarea:focus, select:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-      background: rgba(30, 41, 59, 0.9);
-    }
-    
-    .form-error {
-      color: var(--danger);
-      font-size: 0.875rem;
-      margin-top: 8px;
-      display: none;
-    }
-    
-    input.invalid, textarea.invalid, select.invalid {
-      border-color: var(--danger);
-    }
-    
-    /* Navegação do formulário */
-    .form-navigation {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 40px;
-    }
-    
-    .btn-nav {
-      background: rgba(30, 41, 59, 0.7);
-      color: #e2e8f0;
-      padding: 14px 30px;
-      border-radius: 50px;
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .btn-nav:hover {
-      background: rgba(99, 102, 241, 0.1);
-      transform: translateY(-2px);
-    }
-    
-    .btn-next {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: white;
-    }
-    
-    .btn-next:hover {
-      background: linear-gradient(135deg, var(--primary-light), var(--primary));
-    }
-    
-    .btn-close {
+    .particle {
       position: absolute;
-      top: 20px;
-      right: 20px;
-      background: rgba(239, 68, 68, 0.2);
-      border: 1px solid rgba(239, 68, 68, 0.5);
-      color: #fca5a5;
-      width: 45px;
-      height: 45px;
       border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      transition: all 0.3s ease;
-      z-index: 1001;
+      pointer-events: none;
     }
     
-    .btn-close:hover {
-      background: rgba(239, 68, 68, 0.3);
-      transform: scale(1.1);
-    }
-    
-    /* Loading */
-    .loading {
-      display: none;
+    .glow-effect {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(2, 6, 23, 0.95);
-      z-index: 2000;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-    
-    .loading.active {
-      display: flex;
-    }
-    
-    .loading-spinner {
-      width: 80px;
-      height: 80px;
-      border: 5px solid rgba(99, 102, 241, 0.3);
-      border-top: 5px solid var(--primary);
       border-radius: 50%;
-      animation: spin 1.5s linear infinite;
-      margin-bottom: 25px;
+      filter: blur(60px);
+      pointer-events: none;
+      opacity: 0.5;
+      z-index: 0;
     }
     
-    .loading-text {
-      font-size: 1.5rem;
-      color: #e2e8f0;
-      margin-bottom: 15px;
-    }
-    
-    .loading-subtext {
-      color: #94a3b8;
-      max-width: 500px;
-      line-height: 1.6;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    /* Resultados */
-    .results-section {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(2, 6, 23, 0.95);
-      z-index: 1000;
-      overflow-y: auto;
-      padding: 20px;
-      animation: fadeIn 0.5s ease-out;
-    }
-    
-    .results-section.active {
-      display: block;
-    }
-    
-    .results-container {
-      max-width: 1200px;
-      margin: 40px auto;
-      background: rgba(15, 23, 42, 0.9);
-      backdrop-filter: blur(25px);
-      border-radius: 25px;
-      padding: 40px;
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .results-container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 5px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary), var(--success));
-    }
-    
-    .results-header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    
-    .results-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 3rem;
-      margin-bottom: 10px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    .gradient-text {
+      background: linear-gradient(90deg, #8b5cf6, #06b6d4);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
     
-    .results-subtitle {
-      color: #94a3b8;
-      font-size: 1.2rem;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    
-    .brand-name {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--primary);
-      text-align: center;
-      margin-bottom: 40px;
-      padding: 20px;
-      background: rgba(30, 41, 59, 0.5);
-      border-radius: 15px;
-      border-left: 5px solid var(--primary);
-    }
-    
-    .results-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-      margin-bottom: 40px;
-    }
-    
-    .result-card {
-      background: rgba(30, 41, 59, 0.7);
-      border-radius: 20px;
-      padding: 30px;
-      border: 1px solid rgba(99, 102, 241, 0.2);
+    input, textarea, select {
       transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
     }
     
-    .result-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 5px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #8b5cf6;
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
     }
     
-    .result-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    .form-error {
+      color: #ef4444;
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
     }
     
-    .card-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.5rem;
-      margin-bottom: 20px;
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .card-title i {
-      font-size: 1.3rem;
-    }
-    
-    .color-palette {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    
-    .color {
-      width: 70px;
-      height: 70px;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      transition: transform 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-    }
-    
-    .color::after {
-      content: attr(data-color);
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      font-size: 0.7rem;
-      padding: 3px;
-      text-align: center;
-    }
-    
-    .color:hover {
-      transform: scale(1.1);
-    }
-    
-    .font-sample {
-      font-size: 1.8rem;
-      margin-bottom: 15px;
-      padding: 10px;
-      background: rgba(30, 41, 59, 0.5);
-      border-radius: 10px;
-      text-align: center;
-    }
-    
-    .posts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 15px;
-    }
-    
-    .post {
-      width: 100%;
-      aspect-ratio: 1;
-      background: rgba(30, 41, 59, 0.7);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      text-align: center;
-      padding: 10px;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(99, 102, 241, 0.2);
-      color: #e2e8f0;
-    }
-    
-    .post:hover {
-      background: rgba(99, 102, 241, 0.1);
-      transform: scale(1.05);
-    }
-    
-    .captions-list {
-      list-style: none;
-    }
-    
-    .captions-list li {
-      padding: 15px 0;
-      border-bottom: 1px solid rgba(99, 102, 241, 0.2);
-      position: relative;
-      padding-left: 30px;
-      color: #e2e8f0;
-    }
-    
-    .captions-list li::before {
-      content: '▸';
-      position: absolute;
-      left: 0;
-      color: var(--primary);
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-    
-    .captions-list li:last-child {
-      border-bottom: none;
-    }
-    
-    .results-actions {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 40px;
-    }
-    
-    .btn-download {
-      background: linear-gradient(135deg, var(--success), #059669);
-      color: white;
-    }
-    
-    .btn-download:hover {
-      background: linear-gradient(135deg, #34d399, var(--success));
-    }
-    
-    .btn-new {
-      background: rgba(30, 41, 59, 0.7);
-      color: #e2e8f0;
-      border: 1px solid rgba(99, 102, 241, 0.3);
-    }
-    
-    .btn-new:hover {
-      background: rgba(99, 102, 241, 0.1);
-    }
-    
-    /* Responsividade */
-    @media (max-width: 768px) {
-      .logo {
-        font-size: 2.8rem;
-      }
-      
-      .tagline {
-        font-size: 1.1rem;
-        padding: 20px;
-      }
-      
-      .form-container, .results-container {
-        margin: 20px;
-        padding: 25px;
-      }
-      
-      .form-title, .results-title {
-        font-size: 2rem;
-      }
-      
-      .results-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .form-navigation, .results-actions {
-        flex-direction: column;
-        gap: 15px;
-      }
-      
-      .btn-nav, .btn {
-        width: 100%;
-        justify-content: center;
-      }
-      
-      .progress-steps {
-        flex-wrap: wrap;
-        gap: 15px;
-      }
-      
-      .progress-step {
-        flex: 0 0 calc(50% - 15px);
-      }
-    }
-    
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+    input.invalid, textarea.invalid, select.invalid {
+      border-color: #ef4444;
     }
   </style>
 </head>
 <body>
-  <!-- Efeitos de fundo -->
-  <div class="particles" id="particles"></div>
-  <div class="glow-effect"></div>
-  <div class="glow-effect"></div>
-  <div class="glow-effect"></div>
+  <!-- Particles Container -->
+  <div id="particles" class="fixed inset-0 pointer-events-none z-0"></div>
   
-  <!-- Loading -->
-  <div class="loading" id="loading">
-    <div class="loading-spinner"></div>
-    <div class="loading-text">Gerando sua identidade visual...</div>
-    <div class="loading-subtext">Nossa IA está analisando suas respostas para criar uma identidade visual única e personalizada para sua marca.</div>
-  </div>
-  
-  <!-- Página Inicial -->
-  <div class="container">
-    <div class="overlay"></div>
-    <div class="content">
-      <h1 class="logo">BrandAI</h1>
-      <p class="tagline">Transforme sua visão em identidade visual com o poder da Inteligência Artificial. Crie uma marca única e memorável em minutos.</p>
-      <button class="btn" id="startBtn">
-        <i class="fas fa-rocket"></i> Começar Agora
+  <!-- Glow Effects -->
+  <div class="glow-effect w-[300px] h-[300px]" style="top: 10%; left: 10%; background: radial-gradient(circle, #8b5cf6 0%, transparent 70%); animation: moveGlow 20s infinite alternate ease-in-out;"></div>
+  <div class="glow-effect w-[300px] h-[300px]" style="bottom: 10%; right: 10%; background: radial-gradient(circle, #06b6d4 0%, transparent 70%); animation: moveGlow 20s infinite alternate ease-in-out -10s;"></div>
+  <div class="glow-effect w-[200px] h-[200px]" style="top: 50%; left: 50%; transform: translate(-50%, -50%); background: radial-gradient(circle, #a855f7 0%, transparent 70%); animation: moveGlow 20s infinite alternate ease-in-out -5s;"></div>
+
+  <!-- Landing Page -->
+  <div id="landingPage" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70 z-10"></div>
+    
+    <div class="relative z-20 text-center max-w-4xl mx-auto px-6 animate-fade-in-up">
+      <h1 class="text-7xl md:text-8xl font-black mb-8 gradient-text animate-float animate-glow tracking-tight">
+        BrandAI
+      </h1>
+      
+      <div class="relative mb-12 group">
+        <div class="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-cyan-500/20 to-purple-400/20 blur-xl rounded-3xl"></div>
+        <div class="relative backdrop-blur-xl bg-slate-800/50 border border-purple-500/30 rounded-3xl p-8 overflow-hidden">
+          <p class="text-xl md:text-2xl text-slate-100 leading-relaxed relative z-10">
+            Transforme sua visão em identidade visual com o poder da Inteligência Artificial. 
+            Crie uma marca única e memorável em minutos.
+          </p>
+        </div>
+      </div>
+      
+      <button
+        id="startBtn"
+        class="text-lg px-12 py-7 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-600 hover:to-cyan-600 shadow-lg hover:shadow-xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 animate-pulse-glow border border-purple-500/50 font-semibold"
+      >
+        <i class="fas fa-rocket mr-2"></i>
+        Começar Agora
       </button>
     </div>
   </div>
-  
-  <!-- Formulário (inicialmente escondido) -->
-  <div class="form-section" id="formSection">
-    <button class="btn-close" id="closeBtn">×</button>
-    <div class="form-container">
-      <h2 class="form-title">Teste de Identidade da Marca</h2>
-      <p class="form-subtitle">Responda algumas perguntas para nossa IA criar uma identidade visual única para sua marca</p>
-      
-      <!-- Barra de progresso -->
-      <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
-      </div>
-      
-      <div class="progress-steps">
-        <div class="progress-step">
-          <div class="step-indicator active" id="step1Indicator">1</div>
-          <div class="step-label active">Informações Básicas</div>
-        </div>
-        <div class="progress-step">
-          <div class="step-indicator" id="step2Indicator">2</div>
-          <div class="step-label">Estilo Visual</div>
-        </div>
-        <div class="progress-step">
-          <div class="step-indicator" id="step3Indicator">3</div>
-          <div class="step-label">Público e Objetivos</div>
-        </div>
-        <div class="progress-step">
-          <div class="step-indicator" id="step4Indicator">4</div>
-          <div class="step-label">Finalizar</div>
-        </div>
-      </div>
-      
-      <form id="formBrand">
-        <!-- Passo 1 -->
-        <div class="form-step active" id="step1">
-          <div class="form-group">
-            <label for="nome">Nome da marca *</label>
-            <div class="input-hint">Como sua marca será chamada?</div>
-            <input type="text" id="nome" name="nome" required placeholder="Ex: TechVision">
-            <div class="form-error" id="nomeError">Por favor, insira o nome da marca</div>
-          </div>
-          
-          <div class="form-group">
-            <label for="segmento">Área / segmento *</label>
-            <div class="input-hint">Em qual área sua marca atua?</div>
-            <input type="text" id="segmento" name="segmento" required placeholder="Ex: Tecnologia, Moda, Alimentação">
-            <div class="form-error" id="segmentoError">Por favor, insira o segmento</div>
-          </div>
-          
-          <div class="form-group">
-            <label for="palavras">Três palavras que definem sua marca *</label>
-            <div class="input-hint">Quais adjetivos melhor descrevem sua marca?</div>
-            <input type="text" id="palavras" name="palavras" required placeholder="Ex: inovação, qualidade, confiança">
-            <div class="form-error" id="palavrasError">Por favor, insira pelo menos 3 palavras</div>
-          </div>
-          
-          <div class="form-navigation">
-            <div></div> <!-- Espaço vazio para alinhamento -->
-            <button type="button" class="btn-nav btn-next" id="nextToStep2">
-              Próximo <i class="fas fa-arrow-right"></i>
-            </button>
-          </div>
+
+  <!-- Form Section -->
+  <div id="formSection" class="hidden fixed inset-0 bg-black/95 backdrop-blur-sm z-50 overflow-y-auto p-4 md:p-6 animate-fade-in">
+    <button id="closeFormBtn" class="fixed top-4 right-4 z-[60] w-12 h-12 rounded-full bg-red-500/20 border border-red-500/50 text-red-400 hover:bg-red-500/30 hover:scale-110 transition-all flex items-center justify-center text-2xl">
+      ×
+    </button>
+
+    <div class="max-w-4xl mx-auto my-8 md:my-12">
+      <div class="relative backdrop-blur-xl bg-slate-800/90 border border-purple-500/30 rounded-3xl p-6 md:p-10 shadow-2xl overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 via-cyan-500 to-purple-400"></div>
+        
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-2 gradient-text">
+          Teste de Identidade da Marca
+        </h2>
+        <p class="text-center text-slate-400 mb-8 text-sm md:text-base">
+          Responda algumas perguntas para nossa IA criar uma identidade visual única para sua marca
+        </p>
+
+        <!-- Progress Bar -->
+        <div class="w-full bg-slate-700/50 rounded-full h-3 overflow-hidden mb-6">
+          <div id="progressBar" class="h-full bg-gradient-to-r from-purple-500 to-cyan-500 transition-all duration-500 ease-out rounded-full" style="width: 0%"></div>
         </div>
         
-        <!-- Passo 2 -->
-        <div class="form-step" id="step2">
-          <div class="form-group">
-            <label for="cores_sim">Cores que combinam *</label>
-            <div class="input-hint">Quais cores representam sua marca?</div>
-            <input type="text" id="cores_sim" name="cores_sim" required placeholder="Ex: azul, prata, preto">
-            <div class="form-error" id="coresSimError">Por favor, insira as cores preferidas</div>
+        <!-- Progress Steps -->
+        <div id="progressSteps" class="flex justify-between mb-8 gap-2">
+          <div class="flex flex-col items-center flex-1">
+            <div class="step-indicator w-10 h-10 rounded-full flex items-center justify-center font-bold mb-2 transition-all duration-300 bg-purple-500 text-white border-2 border-purple-500 shadow-lg shadow-purple-500/50">1</div>
+            <span class="text-xs md:text-sm text-center text-purple-500 font-semibold">Informações Básicas</span>
           </div>
-          
-          <div class="form-group">
-            <label for="cores_nao">Cores que NÃO combinam *</label>
-            <div class="input-hint">Quais cores não representam sua marca?</div>
-            <input type="text" id="cores_nao" name="cores_nao" required placeholder="Ex: rosa, amarelo, laranja">
-            <div class="form-error" id="coresNaoError">Por favor, insira as cores a evitar</div>
+          <div class="flex flex-col items-center flex-1">
+            <div class="step-indicator w-10 h-10 rounded-full flex items-center justify-center font-bold mb-2 transition-all duration-300 bg-slate-600 text-slate-400 border-2 border-slate-500">2</div>
+            <span class="text-xs md:text-sm text-center text-slate-400">Estilo Visual</span>
           </div>
-          
-          <div class="form-group">
-            <label for="tom">A marca é séria ou descontraída? *</label>
-            <div class="input-hint">Qual o tom de voz da sua marca?</div>
-            <select id="tom" name="tom" required>
-              <option value="">Selecione uma opção</option>
-              <option value="séria">Séria e Profissional</option>
-              <option value="descontraída">Descontraída e Amigável</option>
-              <option value="equilibrada">Equilibrada</option>
-              <option value="luxuosa">Luxuosa e Sofisticada</option>
-            </select>
-            <div class="form-error" id="tomError">Por favor, defina o tom da marca</div>
+          <div class="flex flex-col items-center flex-1">
+            <div class="step-indicator w-10 h-10 rounded-full flex items-center justify-center font-bold mb-2 transition-all duration-300 bg-slate-600 text-slate-400 border-2 border-slate-500">3</div>
+            <span class="text-xs md:text-sm text-center text-slate-400">Público e Objetivos</span>
           </div>
-          
-          <div class="form-group">
-            <label for="estilo">Minimalista ou vibrante? *</label>
-            <div class="input-hint">Qual o estilo visual da sua marca?</div>
-            <select id="estilo" name="estilo" required>
-              <option value="">Selecione uma opção</option>
-              <option value="minimalista">Minimalista e Limpo</option>
-              <option value="vibrante">Vibrante e Energético</option>
-              <option value="elegante">Elegante e Refinado</option>
-              <option value="orgânico">Orgânico e Natural</option>
-            </select>
-            <div class="form-error" id="estiloError">Por favor, defina o estilo visual</div>
-          </div>
-          
-          <div class="form-navigation">
-            <button type="button" class="btn-nav" id="backToStep1">
-              <i class="fas fa-arrow-left"></i> Anterior
-            </button>
-            <button type="button" class="btn-nav btn-next" id="nextToStep3">
-              Próximo <i class="fas fa-arrow-right"></i>
-            </button>
+          <div class="flex flex-col items-center flex-1">
+            <div class="step-indicator w-10 h-10 rounded-full flex items-center justify-center font-bold mb-2 transition-all duration-300 bg-slate-600 text-slate-400 border-2 border-slate-500">4</div>
+            <span class="text-xs md:text-sm text-center text-slate-400">Finalizar</span>
           </div>
         </div>
-        
-                  <div class="form-group">
-            <label for="moderno">Moderna ou clássica? *</label>
-            <div class="input-hint">Sua marca tem um apelo mais moderno ou clássico?</div>
-            <select id="moderno" name="moderno" required>
-              <option value="">Selecione uma opção</option>
-              <option value="moderna">Moderna e Inovadora</option>
-              <option value="clássica">Clássica e Atemporal</option>
-              <option value="futurista">Futurista</option>
-              <option value="retrô">Retrô e Vintage</option>
-            </select>
-            <div class="form-error" id="modernoError">Por favor, defina o estilo temporal</div>
-          </div>
-          
-          <div class="form-group">
-            <label for="publico">Quem é o público? *</label>
-            <div class="input-hint">Descreva seu público-alvo</div>
-            <textarea id="publico" name="publico" rows="3" required placeholder="Ex: Profissionais de tecnologia, 25-45 anos, interessados em inovação..."></textarea>
-            <div class="form-error" id="publicoError">Por favor, descreva o público-alvo</div>
-          </div>
-          
-          <div class="form-group">
-            <label for="objetivo">Objetivo dos conteúdos *</label>
-            <div class="input-hint">Qual o objetivo principal dos conteúdos da sua marca?</div>
-            <textarea id="objetivo" name="objetivo" rows="3" required placeholder="Ex: Educar sobre tecnologia, gerar leads, aumentar engajamento..."></textarea>
-            <div class="form-error" id="objetivoError">Por favor, defina o objetivo dos conteúdos</div>
-          </div>
-          
-          <div class="form-navigation">
-            <button type="button" class="btn-nav" id="backToStep2">
-              <i class="fas fa-arrow-left"></i> Anterior
-            </button>
-            <button type="button" class="btn-nav btn-next" id="nextToStep4">
-              Próximo <i class="fas fa-arrow-right"></i>
-            </button>
-          </div>
-        </div>
-        
-        <!-- Passo 4 -->
-        <div class="form-step" id="step4">
-          <div class="form-group">
-            <label for="referencias">Marcas que inspiram (opcional)</label>
-            <div class="input-hint">Quais marcas você admira ou se inspira?</div>
-            <input type="text" id="referencias" name="referencias" placeholder="Ex: Apple, Nike, Coca-Cola">
-          </div>
-          
-          <div class="form-group">
-            <label for="frase">Frase que define a marca *</label>
-            <div class="input-hint">Uma frase ou slogan que representa sua marca</div>
-            <input type="text" id="frase" name="frase" required placeholder="Ex: Inovação que transforma">
-            <div class="form-error" id="fraseError">Por favor, insira uma frase que defina a marca</div>
-          </div>
-          
-          <div class="form-group">
-            <div class="input-hint" style="background: rgba(99, 102, 241, 0.1); padding: 15px; border-radius: 10px; border-left: 4px solid var(--primary);">
-              <i class="fas fa-info-circle" style="color: var(--primary); margin-right: 8px;"></i>
-              <strong>Pronto para ver sua identidade visual?</strong><br>
-              Nossa IA irá analisar todas as suas respostas e criar uma identidade visual completa e personalizada para sua marca.
+
+        <form id="brandForm" class="mt-8">
+          <!-- Step 1 -->
+          <div id="step1" class="form-step animate-slide-in">
+            <div class="space-y-6">
+              <div class="space-y-2">
+                <label for="nome" class="block text-base font-semibold">Nome da marca *</label>
+                <p class="text-sm text-slate-400">Como sua marca será chamada?</p>
+                <input type="text" id="nome" name="nome" placeholder="Ex: TechVision" class="w-full px-4 py-3 rounded-xl border border-slate-600 bg-slate-700/50 text-white" required />
+                <div id="nomeError" class="form-error hidden">Nome da marca é obrigatório</div>
+              </div>
+
+              <div class="space-y-2">
+                <label for="segmento" class="block text-base font-semibold">Área / segmento *</label>
+                <p class="text-sm text-slate-400">Em qual área sua marca atua?</p>
+                <input type="text" id="segmento" name="segmento" placeholder="Ex: Tecnologia, Moda, Alimentação" class="w-full px-4 py-3 rounded-xl border border-slate-600 bg-slate-700/50 text-white" required />
+                <div id="segmentoError" class="form-error hidden">Segmento é obrigatório</div>
+              </div>
+
+              <div class="space-y-2">
+                <label for="palavras" class="block text-base font-semibold">Três palavras que definem sua marca *</label>
+                <p class="text-sm text-slate-400">Quais adjetivos melhor descrevem sua marca? (separadas por vírgula)</p>
+                <input type="text" id="palavras" name="palavras" placeholder="Ex: inovação, qualidade, confiança" class="w-full px-4 py-3 rounded-xl border border-slate-600 bg-slate-700/50 text-white" required />
+                <div id="palavrasError" class="form-error hidden">Insira pelo menos 3 palavras separadas por vírgula</div>
+              </div>
+
+              <div class="flex justify-end pt-4">
+                <button type="button" id="nextToStep2" class="px-8 py-3 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 hover:opacity-90 font-semibold">
+                  Próximo <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+              </div>
             </div>
           </div>
-          
-          <div class="form-navigation">
-            <button type="button" class="btn-nav" id="backToStep3">
-              <i class="fas fa-arrow-left"></i> Anterior
-            </button>
-            <button type="submit" class="btn-nav btn-next">
-              <i class="fas fa-magic"></i> Gerar Identidade
-            </button>
+
+          <!-- Step 2 -->
+          <div id="step2" class="form-step hidden">
+            <div class="space-y-6 animate-slide-in">
+              <div class="space-y-2">
+                <label for="cores_sim" class="block text-base font-semibold">Cores que combinam *</label>
+                <p class="text-sm text-slate-400">Quais cores representam sua marca?</p>
+                <input type="text" id="cores_sim" name="cores_sim" placeholder="Ex: azul, prata, preto" class="w-full px-4 py-3 rounded-xl border border-slate-600 bg-slate-700/50 text-white" required />
+                <div id="cores_simError" class="form-error hidden">Cores preferidas são obrigatórias</div>
+              </div>
+
+              <div class="space-y-2">
+                <label for="cores_nao" class="block text-base font-semibold">Cores que NÃO combinam *</label>
+                <p class="text-sm text-slate-400">Quais cores não representam sua marca?</p>
+                <input type="text" id="cores_nao" name="cores_nao" placeholder="Ex: rosa, amarelo, laranja" class="w-full px-4 py-3 rounded-xl border border-slate-600 bg-slate-700/50 text-white" required />
+                <div id="cores_naoError" class="form-error hidden">Cores a evitar são obrigatórias</div>
+              </div>
+
+              <div class="space-y-2">
+                <label for="tom" class="block text-base font-semibold">A marca é séria ou descontraída? *</label>
+                <p class="text-sm text-slate-400">Qual o tom de voz da sua marca?</p>
+                <select id="tom" name="tom" class="w-full px-4 py-3 rounded-xl border border-slate-600 bg-slate-700/50 text-white" required>
+                  <option value="">Selecione uma opção</option>
+                  <option value="séria">Séria e Profissional</option>
+                  <option value="descontraída">Descontraída e Amigável</option>
+                  <option value="equilibrada">Equilibrada</option>
+                  <option value="luxuosa">Luxuosa e Sofisticada</option>
+                </select>
+                <div id="tomError" class="form-error hidden">Defina o tom da marca</div>
+              </div>
+
+              <div class="space-y-2">
+                <label for="estilo" class="block text-base font-semibold">Minimalista ou vibrante? *</label>
+                <p class="text-sm text-slate-400">Qual o estilo visual da sua marca?</p>
+                <select id="estilo" name="estilo" class="w-full px-4 py-3 rounded-xl border border-slate-600 bg-slate-700/50 text-white" required>
+                  <option value="">Selecione uma opção</option>
+                  <option value="minimalista">Minimalista e Limpo</option>
+                  <option value="vibrante">Vibrante e Energético</option>
+                  <option value="elegante">Elegante e Refinado</option>
+                  <option value="orgânico">Orgânico e Natural</option>
+                </select>
+                <div id="estiloError" class="form-error hidden">Defina o estilo visual</div>
+              </div>
+
+              <div class="flex justify-between pt-4">
+                <button type="button" id="backToStep1" class="px-8 py-3 rounded-full border border-slate-600 hover:bg-slate-700 font-semibold">
+                  <i class="fas fa-arrow-left mr-2"></i> Anterior
+                </button>
+                <button type="button" id="nextToStep3" class="px-8 py-3 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 hover:opacity-90 font-semibold">
+                  Próximo <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      </form>
+
+          <!-- Step 3 -->
+          <div id="step3" class="form-step hidden">
+            <div class="space-y-6 animate-slide-in">
+              <div class="space-y-2">
+                <label for="moderno" class="block text-base font-semibold">Moderna ou clássica? *</label>
+                <p class="text-sm text-slate-400">Sua marca tem um apelo mais moderno ou clássico?</p>
+                <select id="moderno" name="moderno" class="w-full px-4 py-3 rounded-xl border border-slate-600 bg-slate-700/50 text-white" required>
+                  <option value="">Selecione uma opção</option>
+                  <option value="moderna">Moderna e Inovadora</option>
+                  <option value="clássica">Clássica e Atemporal</option>
+                  <option value="futurista">Futurista</option>
+                  <option value="retrô">Retrô e Vintage</option>
+                </select>
+                <div id="modernoError" class="form-error hidden">Defina o estilo temporal</div>
+              </div>
+
+              <div class="space-y-2">
+                <label for="publico" class="block text-base font-semibold">Público-alvo *</label>
+                <p class="text-sm text-slate-400">Para quem sua marca se direciona?</p>
+                <input type="text" id="publico" name="publico" placeholder="Ex: jovens adultos, profissionais, famílias" class="w-full px-4 py-3 rounded-xl border border-slate-600 bg-slate-700/50 text-white" required />
+                <div id="publicoError" class="form-error hidden">Público-alvo é obrigatório</div>
+              </div>
+
+              <div class="space-y-2">
+                <label for="objetivo" class="block text-base font-semibold">Objetivo principal *</label>
+                <p class="text-sm text-slate-400">Qual o principal objetivo da sua marca?</p>
+                <select id="objetivo" name="objetivo" class="w-full px-4 py-3 rounded-xl border border-slate-600 bg-slate-700/50 text-white" required>
+                  <option value="">Selecione uma opção</option>
+                  <option value="vender">Vender produtos</option>
+                  <option value="servicos">Oferecer serviços</option>
+                  <option value="educar">Educar e informar</option>
+                  <option value="entreter">Entreter</option>
+                  <option value="comunidade">Construir comunidade</option>
+                </select>
+                <div id="objetivoError" class="form-error hidden">Objetivo é obrigatório</div>
+              </div>
+
+              <div class="flex justify-between pt-4">
+                <button type="button" id="backToStep2" class="px-8 py-3 rounded-full border border-slate-600 hover:bg-slate-700 font-semibold">
+                  <i class="fas fa-arrow-left mr-2"></i> Anterior
+                </button>
+                <button type="button" id="nextToStep4" class="px-8 py-3 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 hover:opacity-90 font-semibold">
+                  Próximo <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div id="step4" class="form-step hidden">
+            <div class="space-y-6 animate-slide-in">
+              <div class="space-y-2">
+                <label for="inspiracao" class="block text-base font-semibold">Marcas de inspiração</label>
+                <p class="text-sm text-slate-400">Quais marcas você admira? (opcional)</p>
+                <input type="text" id="inspiracao" name="inspiracao" placeholder="Ex: Apple, Nike, Coca-Cola" class="w-full px-4 py-3 rounded-xl border border-slate-600 bg-slate-700/50 text-white" />
+              </div>
+
+              <div class="space-y-2">
+                <label for="elementos" class="block text-base font-semibold">Elementos importantes</label>
+                <p class="text-sm text-slate-400">Algum símbolo, elemento ou conceito que deve ser considerado? (opcional)</p>
+                <textarea id="elementos" name="elementos" rows="3" placeholder="Ex: natureza, tecnologia, conexão, movimento..." class="w-full px-4 py-3 rounded-xl border border-slate-600 bg-slate-700/50 text-white resize-none"></textarea>
+              </div>
+
+              <div class="flex justify-between pt-4">
+                <button type="button" id="backToStep3" class="px-8 py-3 rounded-full border border-slate-600 hover:bg-slate-700 font-semibold">
+                  <i class="fas fa-arrow-left mr-2"></i> Anterior
+                </button>
+                <button type="submit" class="px-8 py-3 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 hover:opacity-90 font-semibold">
+                  Gerar Minha Marca <i class="fas fa-magic ml-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-  
-  <!-- Resultados -->
-  <div class="results-section" id="resultsSection">
-    <button class="btn-close" id="closeResultsBtn">×</button>
-    <div class="results-container">
-      <div class="results-header">
-        <h2 class="results-title">Sua Identidade Visual</h2>
-        <p class="results-subtitle">Baseado nas suas respostas, nossa IA criou esta identidade visual única para sua marca</p>
-      </div>
-      
-      <div class="brand-name" id="resultBrandName">
-        <!-- Nome da marca será inserido aqui -->
-      </div>
-      
-      <div class="results-grid">
-        <!-- Cartão de Identidade Visual -->
-        <div class="result-card">
-          <h3 class="card-title">
-            <i class="fas fa-palette"></i> Identidade Visual
-          </h3>
-          <div class="color-palette" id="colorPalette">
-            <!-- Cores serão geradas dinamicamente -->
-          </div>
-          <div class="font-sample" id="fontSample">
-            <!-- Fonte será exibida aqui -->
-          </div>
-          <p><strong>Tom da marca:</strong> <span id="brandTone"></span></p>
-          <p><strong>Estilo visual:</strong> <span id="visualStyle"></span></p>
+
+  <!-- Loading Screen -->
+  <div id="loadingScreen" class="hidden fixed inset-0 bg-black/95 backdrop-blur-sm z-50 flex flex-col items-center justify-center text-center p-6 animate-fade-in">
+    <div class="w-20 h-20 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin mb-8"></div>
+    
+    <h2 class="text-2xl md:text-3xl font-bold mb-4 gradient-text">
+      Gerando sua identidade visual...
+    </h2>
+    
+    <p class="text-slate-400 max-w-md leading-relaxed">
+      Nossa IA está analisando suas respostas para criar uma identidade visual única e personalizada para sua marca.
+    </p>
+  </div>
+
+  <!-- Results Screen -->
+  <div id="resultsScreen" class="hidden fixed inset-0 bg-black/95 backdrop-blur-sm z-50 overflow-y-auto p-4 md:p-6 animate-fade-in">
+    <button id="closeResultsBtn" class="fixed top-4 right-4 z-[60] w-12 h-12 rounded-full bg-red-500/20 border border-red-500/50 text-red-400 hover:bg-red-500/30 hover:scale-110 transition-all flex items-center justify-center text-2xl">
+      ×
+    </button>
+
+    <div class="max-w-6xl mx-auto my-8 md:my-12">
+      <div class="relative backdrop-blur-xl bg-slate-800/90 border border-purple-500/30 rounded-3xl p-6 md:p-10 shadow-2xl overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 via-cyan-500 to-green-500"></div>
+
+        <div class="text-center mb-12">
+          <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">
+            Sua Identidade Visual
+          </h2>
+          <p class="text-slate-400 text-lg">
+            Pronto! Nossa IA criou uma identidade visual única baseada nas suas respostas
+          </p>
         </div>
-        
-        <!-- Cartão de Posts -->
-        <div class="result-card">
-          <h3 class="card-title">
-            <i class="fas fa-image"></i> Posts Sugeridos
-          </h3>
-          <div class="posts-grid" id="postsGrid">
-            <!-- Posts serão gerados dinamicamente -->
-          </div>
-        </div>
-        
-        <!-- Cartão de Legendas -->
-        <div class="result-card">
-          <h3 class="card-title">
-            <i class="fas fa-comment-alt"></i> Legendas e Conteúdo
-          </h3>
-          <ul class="captions-list" id="captionsList">
-            <!-- Legendas serão geradas dinamicamente -->
-          </ul>
-        </div>
-        
-        <!-- Cartão de Recomendações -->
-        <div class="result-card">
-          <h3 class="card-title">
-            <i class="fas fa-lightbulb"></i> Recomendações
-          </h3>
-          <div id="recommendations">
-            <!-- Recomendações serão geradas dinamicamente -->
+
+        <div class="text-center mb-12">
+          <div class="inline-block bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border-l-4 border-purple-500 rounded-2xl px-8 py-6">
+            <h3 id="resultBrandName" class="text-3xl md:text-4xl font-bold text-purple-400"></h3>
           </div>
         </div>
-      </div>
-      
-      <div class="results-actions">
-        <button class="btn btn-download" id="downloadBtn">
-          <i class="fas fa-download"></i> Baixar Kit Completo
-        </button>
-        <button class="btn btn-new" id="newBrandBtn">
-          <i class="fas fa-plus"></i> Criar Nova Marca
-        </button>
+
+        <div id="resultsContent" class="grid md:grid-cols-2 gap-6 mb-12">
+          <!-- Results will be injected here -->
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <button id="downloadBtn" class="px-8 py-4 rounded-full bg-gradient-to-r from-green-500 to-green-600 hover:opacity-90 font-semibold text-lg">
+            <i class="fas fa-download mr-2"></i>
+            Baixar Kit Completo
+          </button>
+          <button id="newBrandBtn" class="px-8 py-4 rounded-full border border-slate-600 hover:bg-slate-700 font-semibold text-lg">
+            <i class="fas fa-plus mr-2"></i>
+            Criar Nova Marca
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    // Inicialização quando o DOM estiver carregado
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('DOM carregado - inicializando aplicação...');
+    // State
+    let currentStep = 1;
+    let formData = {};
+
+    // Elements
+    const landingPage = document.getElementById('landingPage');
+    const formSection = document.getElementById('formSection');
+    const loadingScreen = document.getElementById('loadingScreen');
+    const resultsScreen = document.getElementById('resultsScreen');
+    
+    const startBtn = document.getElementById('startBtn');
+    const closeFormBtn = document.getElementById('closeFormBtn');
+    const closeResultsBtn = document.getElementById('closeResultsBtn');
+    const newBrandBtn = document.getElementById('newBrandBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    
+    const brandForm = document.getElementById('brandForm');
+    const progressBar = document.getElementById('progressBar');
+    
+    // Initialize particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const colors = ['#8b5cf6', '#06b6d4', '#a855f7', '#10b981', '#f59e0b'];
       
-      // Elementos principais
-      const startBtn = document.getElementById('startBtn');
-      const closeBtn = document.getElementById('closeBtn');
-      const closeResultsBtn = document.getElementById('closeResultsBtn');
-      const formSection = document.getElementById('formSection');
-      const resultsSection = document.getElementById('resultsSection');
-      const formBrand = document.getElementById('formBrand');
-      const loadingElement = document.getElementById('loading');
-      const progressBar = document.getElementById('progressBar');
-      
-      // Elementos de navegação
-      const nextToStep2 = document.getElementById('nextToStep2');
-      const nextToStep3 = document.getElementById('nextToStep3');
-      const nextToStep4 = document.getElementById('nextToStep4');
-      const backToStep1 = document.getElementById('backToStep1');
-      const backToStep2 = document.getElementById('backToStep2');
-      const backToStep3 = document.getElementById('backToStep3');
-      
-      // Elementos de resultados
-      const resultBrandName = document.getElementById('resultBrandName');
-      const colorPalette = document.getElementById('colorPalette');
-      const fontSample = document.getElementById('fontSample');
-      const brandTone = document.getElementById('brandTone');
-      const visualStyle = document.getElementById('visualStyle');
-      const postsGrid = document.getElementById('postsGrid');
-      const captionsList = document.getElementById('captionsList');
-      const recommendations = document.getElementById('recommendations');
-      const downloadBtn = document.getElementById('downloadBtn');
-      const newBrandBtn = document.getElementById('newBrandBtn');
-      
-      // Estado atual do formulário
-      let currentStep = 1;
-      const totalSteps = 4;
-      
-      // Criar partículas para o efeito de fundo
-      function createParticles() {
-        const particlesContainer = document.getElementById('particles');
-        const particleCount = window.innerWidth < 768 ? 20 : 40;
+      for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle', 'animate-float');
         
-        for (let i = 0; i < particleCount; i++) {
-          const particle = document.createElement('div');
-          particle.classList.add('particle');
-          
-          const size = Math.random() * 5 + 2;
-          particle.style.width = `${size}px`;
-          particle.style.height = `${size}px`;
-          particle.style.left = `${Math.random() * 100}vw`;
-          particle.style.top = `${Math.random() * 100}vh`;
-          
-          const opacity = Math.random() * 0.5 + 0.1;
-          const colorValue = Math.random();
-          let color;
-          
-          if (colorValue < 0.33) {
-            color = `rgba(99, 102, 241, ${opacity})`; // Primary
-          } else if (colorValue < 0.66) {
-            color = `rgba(6, 182, 212, ${opacity})`; // Secondary
-          } else {
-            color = `rgba(139, 92, 246, ${opacity})`; // Primary Light
-          }
-          
-          particle.style.background = color;
-          
-          const duration = Math.random() * 20 + 10;
-          particle.style.animationDuration = `${duration}s`;
-          
-          const delay = Math.random() * 5;
-          particle.style.animationDelay = `${delay}s`;
-          
-          particlesContainer.appendChild(particle);
-        }
+        const size = Math.random() * 5 + 2;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.opacity = Math.random() * 0.7 + 0.1;
+        particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+        
+        particlesContainer.appendChild(particle);
       }
-      
-      // Atualizar barra de progresso
-      function updateProgressBar() {
-        const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
-        progressBar.style.width = `${progress}%`;
-        
-        // Atualizar indicadores de passo
-        for (let i = 1; i <= totalSteps; i++) {
-          const indicator = document.getElementById(`step${i}Indicator`);
-          const label = indicator.parentElement.querySelector('.step-label');
-          
-          if (i < currentStep) {
-            indicator.classList.remove('active');
-            indicator.classList.add('completed');
-            label.classList.remove('active');
-          } else if (i === currentStep) {
-            indicator.classList.add('active');
-            indicator.classList.remove('completed');
-            label.classList.add('active');
-          } else {
-            indicator.classList.remove('active', 'completed');
-            label.classList.remove('active');
-          }
-        }
+    }
+    
+    createParticles();
+    
+    // Event Listeners
+    startBtn.addEventListener('click', () => {
+      landingPage.classList.add('hidden');
+      formSection.classList.remove('hidden');
+    });
+    
+    closeFormBtn.addEventListener('click', () => {
+      formSection.classList.add('hidden');
+      landingPage.classList.remove('hidden');
+    });
+    
+    closeResultsBtn.addEventListener('click', () => {
+      resultsScreen.classList.add('hidden');
+      landingPage.classList.remove('hidden');
+    });
+    
+    newBrandBtn.addEventListener('click', () => {
+      resultsScreen.classList.add('hidden');
+      formSection.classList.remove('hidden');
+      resetForm();
+    });
+    
+    downloadBtn.addEventListener('click', () => {
+      alert('Funcionalidade de download será implementada em breve!');
+    });
+    
+    // Navigation
+    document.getElementById('nextToStep2').addEventListener('click', () => {
+      if (validateStep(1)) navigateToStep(2);
+    });
+    
+    document.getElementById('nextToStep3').addEventListener('click', () => {
+      if (validateStep(2)) navigateToStep(3);
+    });
+    
+    document.getElementById('nextToStep4').addEventListener('click', () => {
+      if (validateStep(3)) navigateToStep(4);
+    });
+    
+    document.getElementById('backToStep1').addEventListener('click', () => navigateToStep(1));
+    document.getElementById('backToStep2').addEventListener('click', () => navigateToStep(2));
+    document.getElementById('backToStep3').addEventListener('click', () => navigateToStep(3));
+    
+    brandForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (validateStep(4)) {
+        generateBrand();
       }
+    });
+    
+    function navigateToStep(step) {
+      // Hide all steps
+      document.querySelectorAll('.form-step').forEach(s => s.classList.add('hidden'));
+      document.getElementById(`step${step}`).classList.remove('hidden');
       
-      // Navegar entre passos
-      function goToStep(step) {
-        // Validar se pode avançar
-        if (step > currentStep && !validateCurrentStep()) {
-          return;
-        }
-        
-        // Esconder passo atual
-        document.getElementById(`step${currentStep}`).classList.remove('active');
-        
-        // Atualizar passo atual
-        currentStep = step;
-        
-        // Mostrar novo passo
-        document.getElementById(`step${currentStep}`).classList.add('active');
-        
-        // Atualizar barra de progresso
-        updateProgressBar();
-      }
+      // Update progress indicators
+      const indicators = document.querySelectorAll('.step-indicator');
+      const labels = document.querySelectorAll('#progressSteps span');
       
-      // Validar passo atual
-      function validateCurrentStep() {
-        const currentStepElement = document.getElementById(`step${currentStep}`);
-        const inputs = currentStepElement.querySelectorAll('input[required], textarea[required], select[required]');
-        let isValid = true;
-        
-        inputs.forEach(input => {
-          if (!input.value.trim()) {
-            isValid = false;
-            input.classList.add('invalid');
-            const errorElement = document.getElementById(`${input.name}Error`);
-            if (errorElement) errorElement.style.display = 'block';
-          } else {
-            input.classList.remove('invalid');
-            const errorElement = document.getElementById(`${input.name}Error`);
-            if (errorElement) errorElement.style.display = 'none';
-          }
-        });
-        
-        return isValid;
-      }
-      
-      // Gerar identidade visual baseada nas respostas
-      function generateBrandIdentity(data) {
-        // Paleta de cores baseada nas preferências
-        const colorPreferences = data.cores_sim.toLowerCase();
-        let colors = [];
-        
-        if (colorPreferences.includes('azul') || colorPreferences.includes('blue')) {
-          colors = ['#1e3a8a', '#3b82f6', '#60a5fa', '#93c5fd', '#dbeafe'];
-        } else if (colorPreferences.includes('verde') || colorPreferences.includes('green')) {
-          colors = ['#065f46', '#10b981', '#34d399', '#6ee7b7', '#a7f3d0'];
-        } else if (colorPreferences.includes('rosa') || colorPreferences.includes('pink') || colorPreferences.includes('vermelho') || colorPreferences.includes('red')) {
-          colors = ['#831843', '#ec4899', '#f472b6', '#f9a8d4', '#fce7f3'];
-        } else if (colorPreferences.includes('roxo') || colorPreferences.includes('purple') || colorPreferences.includes('violeta')) {
-          colors = ['#581c87', '#8b5cf6', '#a78bfa', '#c4b5fd', '#ddd6fe'];
-        } else if (colorPreferences.includes('laranja') || colorPreferences.includes('orange') || colorPreferences.includes('amarelo') || colorPreferences.includes('yellow')) {
-          colors = ['#7c2d12', '#f59e0b', '#fbbf24', '#fcd34d', '#fef3c7'];
+      indicators.forEach((indicator, index) => {
+        const stepNum = index + 1;
+        if (stepNum < step) {
+          indicator.className = 'step-indicator w-10 h-10 rounded-full flex items-center justify-center font-bold mb-2 transition-all duration-300 bg-green-500 text-white border-2 border-green-500';
+          indicator.innerHTML = '<i class="fas fa-check"></i>';
+        } else if (stepNum === step) {
+          indicator.className = 'step-indicator w-10 h-10 rounded-full flex items-center justify-center font-bold mb-2 transition-all duration-300 bg-purple-500 text-white border-2 border-purple-500 shadow-lg shadow-purple-500/50';
+          indicator.textContent = stepNum;
         } else {
-          // Paleta neutra padrão
-          colors = ['#1f2937', '#4b5563', '#6b7280', '#9ca3af', '#d1d5db'];
-        }
-        
-        // Fontes baseadas no estilo
-        let fontFamily = 'Arial, sans-serif';
-        if (data.estilo === 'minimalista') {
-          fontFamily = "'Helvetica Neue', Arial, sans-serif";
-        } else if (data.estilo === 'elegante') {
-          fontFamily = "'Playfair Display', serif";
-        } else if (data.estilo === 'orgânico') {
-          fontFamily = "'Merriweather', serif";
-        } else if (data.estilo === 'vibrante') {
-          fontFamily = "'Montserrat', sans-serif";
-        }
-        
-        // Posts sugeridos
-        const palavrasArray = data.palavras.split(',').slice(0, 3);
-        const posts = [
-          `Lançamento ${data.nome}`,
-          `Inovação em ${data.segmento}`,
-          `${palavrasArray[0] || 'Qualidade'} que inspira`,
-          `${data.frase}`,
-          `Conheça ${data.nome}`,
-          `Novidade no mercado`
-        ];
-        
-        // Legendas sugeridas
-        const captions = [
-          `Descubra como ${data.nome} está revolucionando o mercado de ${data.segmento}. ${data.frase}`,
-          `Conheça nossa visão e valores. ${data.palavras.split(',').slice(0, 2).join(' e ')} são nossos pilares.`,
-          `Inspirado em ${data.referencias || 'grandes marcas'}, apresentamos nossa nova identidade visual.`,
-          `Nosso público: ${data.publico.split('.').slice(0, 1).join('.')}`,
-          `Objetivo: ${data.objetivo.split('.').slice(0, 1).join('.')}`
-        ];
-        
-        // Recomendações
-        const recs = [
-          `<p><strong>Logo:</strong> Use a paleta de cores em seu logotipo para criar consistência visual.</p>`,
-          `<p><strong>Tipografia:</strong> A fonte ${fontFamily.split(',')[0].replace(/'/g, '')} funciona bem para ${data.estilo}.</p>`,
-          `<p><strong>Tom de voz:</strong> Mantenha um tom ${data.tom} em todas as comunicações.</p>`,
-          `<p><strong>Conteúdo:</strong> Foque em ${data.objetivo.split(' ').slice(0, 3).join(' ')} para engajar seu público.</p>`
-        ];
-        
-        return {
-          colors,
-          fontFamily,
-          posts,
-          captions,
-          recommendations: recs
-        };
-      }
-      
-      // Exibir resultados
-      function displayResults(data) {
-        const brandIdentity = generateBrandIdentity(data);
-        
-        // Nome da marca
-        resultBrandName.textContent = data.nome;
-        
-        // Paleta de cores
-        colorPalette.innerHTML = '';
-        brandIdentity.colors.forEach(color => {
-          const colorElement = document.createElement('div');
-          colorElement.className = 'color';
-          colorElement.style.background = color;
-          colorElement.setAttribute('data-color', color);
-          colorPalette.appendChild(colorElement);
-        });
-        
-        // Fonte
-        fontSample.textContent = `Aa - ${data.nome}`;
-        fontSample.style.fontFamily = brandIdentity.fontFamily;
-        
-        // Tom e estilo
-        brandTone.textContent = data.tom;
-        visualStyle.textContent = data.estilo;
-        
-        // Posts
-        postsGrid.innerHTML = '';
-        brandIdentity.posts.forEach((post, index) => {
-          const postElement = document.createElement('div');
-          postElement.className = 'post';
-          postElement.textContent = post;
-          postElement.style.background = brandIdentity.colors[index % brandIdentity.colors.length];
-          postsGrid.appendChild(postElement);
-        });
-        
-        // Legendas
-        captionsList.innerHTML = '';
-        brandIdentity.captions.forEach(caption => {
-          const captionElement = document.createElement('li');
-          captionElement.textContent = caption;
-          captionsList.appendChild(captionElement);
-        });
-        
-        // Recomendações
-        recommendations.innerHTML = brandIdentity.recommendations.join('');
-      }
-      
-      // Event Listeners
-      if (startBtn) {
-        startBtn.addEventListener('click', function() {
-          console.log('Iniciando teste de marca...');
-          formSection.classList.add('active');
-          document.body.style.overflow = 'hidden';
-        });
-      }
-      
-      if (closeBtn) {
-        closeBtn.addEventListener('click', function() {
-          formSection.classList.remove('active');
-          document.body.style.overflow = 'auto';
-          // Resetar formulário
-          currentStep = 1;
-          updateProgressBar();
-          document.querySelectorAll('.form-step').forEach(step => {
-            step.classList.remove('active');
-          });
-          document.getElementById('step1').classList.add('active');
-        });
-      }
-      
-      if (closeResultsBtn) {
-        closeResultsBtn.addEventListener('click', function() {
-          resultsSection.classList.remove('active');
-          document.body.style.overflow = 'auto';
-        });
-      }
-      
-      // Navegação entre passos
-      if (nextToStep2) nextToStep2.addEventListener('click', () => goToStep(2));
-      if (nextToStep3) nextToStep3.addEventListener('click', () => goToStep(3));
-      if (nextToStep4) nextToStep4.addEventListener('click', () => goToStep(4));
-      if (backToStep1) backToStep1.addEventListener('click', () => goToStep(1));
-      if (backToStep2) backToStep2.addEventListener('click', () => goToStep(2));
-      if (backToStep3) backToStep3.addEventListener('click', () => goToStep(3));
-      
-      // Submissão do formulário
-      if (formBrand) {
-        formBrand.addEventListener('submit', function(e) {
-          e.preventDefault();
-          console.log('Formulário submetido');
-          
-          if (!validateCurrentStep()) {
-            alert('Por favor, preencha todos os campos obrigatórios corretamente.');
-            return;
-          }
-          
-          const data = Object.fromEntries(new FormData(this).entries());
-          localStorage.setItem("brandData", JSON.stringify(data));
-          
-          // Mostrar loading
-          if (loadingElement) loadingElement.style.display = 'flex';
-          
-          // Simular processamento
-          setTimeout(() => {
-            // Esconder loading
-            if (loadingElement) loadingElement.style.display = 'none';
-            
-            // Fechar formulário
-            formSection.classList.remove('active');
-            
-            // Exibir resultados
-            displayResults(data);
-            resultsSection.classList.add('active');
-            
-          }, 3000);
-        });
-      }
-      
-      // Botão para criar nova marca
-      if (newBrandBtn) {
-        newBrandBtn.addEventListener('click', function() {
-          resultsSection.classList.remove('active');
-          document.body.style.overflow = 'auto';
-          formBrand.reset();
-          currentStep = 1;
-          updateProgressBar();
-          document.querySelectorAll('.form-step').forEach(step => {
-            step.classList.remove('active');
-          });
-          document.getElementById('step1').classList.add('active');
-        });
-      }
-      
-      // Botão de download (simulado)
-      if (downloadBtn) {
-        downloadBtn.addEventListener('click', function() {
-          alert('Em uma versão completa, este botão baixaria um arquivo ZIP com:\n- Paleta de cores\n- Logotipo personalizado\n- Guia de uso da marca\n- Templates para redes sociais');
-        });
-      }
-      
-      // Fechar formulário pressionando ESC
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          if (formSection.classList.contains('active')) {
-            formSection.classList.remove('active');
-            document.body.style.overflow = 'auto';
-          }
-          if (resultsSection.classList.contains('active')) {
-            resultsSection.classList.remove('active');
-            document.body.style.overflow = 'auto';
-          }
+          indicator.className = 'step-indicator w-10 h-10 rounded-full flex items-center justify-center font-bold mb-2 transition-all duration-300 bg-slate-600 text-slate-400 border-2 border-slate-500';
+          indicator.textContent = stepNum;
         }
       });
       
-      // Fechar formulário clicando fora
-      formSection.addEventListener('click', function(e) {
-        if (e.target === formSection) {
-          formSection.classList.remove('active');
-          document.body.style.overflow = 'auto';
+      labels.forEach((label, index) => {
+        if (index === step - 1) {
+          label.classList.remove('text-slate-400');
+          label.classList.add('text-purple-500', 'font-semibold');
+        } else {
+          label.classList.remove('text-purple-500', 'font-semibold');
+          label.classList.add('text-slate-400');
         }
       });
       
-      resultsSection.addEventListener('click', function(e) {
-        if (e.target === resultsSection) {
-          resultsSection.classList.remove('active');
-          document.body.style.overflow = 'auto';
+      // Update progress bar
+      const progress = ((step - 1) / 3) * 100;
+      progressBar.style.width = `${progress}%`;
+      
+      currentStep = step;
+    }
+    
+    function validateStep(step) {
+      let isValid = true;
+      
+      function showError(fieldId) {
+        document.getElementById(fieldId).classList.add('invalid');
+        document.getElementById(`${fieldId}Error`).classList.remove('hidden');
+        isValid = false;
+      }
+      
+      function hideError(fieldId) {
+        document.getElementById(fieldId).classList.remove('invalid');
+        document.getElementById(`${fieldId}Error`).classList.add('hidden');
+      }
+      
+      if (step === 1) {
+        const nome = document.getElementById('nome');
+        const segmento = document.getElementById('segmento');
+        const palavras = document.getElementById('palavras');
+        
+        nome.value.trim() ? hideError('nome') : showError('nome');
+        segmento.value.trim() ? hideError('segmento') : showError('segmento');
+        
+        if (palavras.value.trim() && palavras.value.split(',').length >= 3) {
+          hideError('palavras');
+        } else {
+          showError('palavras');
         }
-      });
+      }
       
-      // Inicializar efeitos
-      createParticles();
-      updateProgressBar();
+      if (step === 2) {
+        const cores_sim = document.getElementById('cores_sim');
+        const cores_nao = document.getElementById('cores_nao');
+        const tom = document.getElementById('tom');
+        const estilo = document.getElementById('estilo');
+        
+        cores_sim.value.trim() ? hideError('cores_sim') : showError('cores_sim');
+        cores_nao.value.trim() ? hideError('cores_nao') : showError('cores_nao');
+        tom.value ? hideError('tom') : showError('tom');
+        estilo.value ? hideError('estilo') : showError('estilo');
+      }
       
-      console.log('Aplicação inicializada com sucesso!');
+      if (step === 3) {
+        const moderno = document.getElementById('moderno');
+        const publico = document.getElementById('publico');
+        const objetivo = document.getElementById('objetivo');
+        
+        moderno.value ? hideError('moderno') : showError('moderno');
+        publico.value.trim() ? hideError('publico') : showError('publico');
+        objetivo.value ? hideError('objetivo') : showError('objetivo');
+      }
+      
+      return isValid;
+    }
+    
+    function generateBrand() {
+      // Collect form data
+      formData = {
+        nome: document.getElementById('nome').value,
+        segmento: document.getElementById('segmento').value,
+        palavras: document.getElementById('palavras').value,
+        cores_sim: document.getElementById('cores_sim').value,
+        cores_nao: document.getElementById('cores_nao').value,
+        tom: document.getElementById('tom').value,
+        estilo: document.getElementById('estilo').value,
+        moderno: document.getElementById('moderno').value,
+        publico: document.getElementById('publico').value,
+        objetivo: document.getElementById('objetivo').value,
+        inspiracao: document.getElementById('inspiracao').value,
+        elementos: document.getElementById('elementos').value
+      };
+      
+      // Show loading
+      formSection.classList.add('hidden');
+      loadingScreen.classList.remove('hidden');
+      
+      // Simulate AI processing
+      setTimeout(() => {
+        loadingScreen.classList.add('hidden');
+        showResults();
+      }, 3000);
+    }
+    
+    function showResults() {
+      document.getElementById('resultBrandName').textContent = formData.nome;
+      
+      const colors = formData.cores_sim.split(',').map(c => c.trim()).slice(0, 5);
+      const palavras = formData.palavras.split(',').map(p => p.trim()).slice(0, 3);
+      
+      const resultsHTML = `
+        <div class="bg-slate-700/30 border border-purple-500/20 rounded-2xl p-6 hover:scale-105 transition-transform relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-cyan-500"></div>
+          <h3 class="flex items-center gap-3 text-xl font-bold mb-6 text-purple-400">
+            <i class="fas fa-palette"></i>
+            Paleta de Cores
+          </h3>
+          <div class="flex gap-4 mb-4 flex-wrap">
+            ${colors.map(color => `
+              <div class="relative w-16 h-16 rounded-xl shadow-lg hover:scale-110 transition-transform cursor-pointer group" style="background-color: ${color}">
+                <span class="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-xs p-1 text-center rounded-b-xl opacity-0 group-hover:opacity-100 transition-opacity">
+                  ${color}
+                </span>
+              </div>
+            `).join('')}
+          </div>
+          <p class="text-sm text-slate-400">
+            Uma paleta ${formData.estilo} que combina ${formData.tom}, perfeita para ${formData.segmento.toLowerCase()}.
+          </p>
+        </div>
+
+        <div class="bg-slate-700/30 border border-purple-500/20 rounded-2xl p-6 hover:scale-105 transition-transform relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-cyan-500"></div>
+          <h3 class="flex items-center gap-3 text-xl font-bold mb-6 text-purple-400">
+            <i class="fas fa-font"></i>
+            Tipografia
+          </h3>
+          <div class="space-y-4">
+            <div class="bg-slate-700/50 rounded-xl p-4 text-center">
+              <p class="text-3xl font-black text-purple-400">${formData.nome}</p>
+              <p class="text-xs text-slate-400 mt-2">Título Principal</p>
+            </div>
+            <div class="bg-slate-700/50 rounded-xl p-4 text-center">
+              <p class="text-xl">${formData.segmento}</p>
+              <p class="text-xs text-slate-400 mt-2">Texto Corpo</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400 mt-4">
+            Combinação perfeita entre modernidade e legibilidade para todos os materiais.
+          </p>
+        </div>
+
+        <div class="bg-slate-700/30 border border-purple-500/20 rounded-2xl p-6 hover:scale-105 transition-transform relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-cyan-500"></div>
+          <h3 class="flex items-center gap-3 text-xl font-bold mb-6 text-purple-400">
+            <i class="fas fa-hashtag"></i>
+            Posts Sugeridos
+          </h3>
+          <div class="grid grid-cols-3 gap-3">
+            ${palavras.map(palavra => `
+              <div class="aspect-square bg-gradient-to-br from-purple-500/20 to-cyan-500/20 rounded-xl flex items-center justify-center text-center p-3 hover:scale-105 transition-transform border border-purple-500/30">
+                <p class="text-sm font-semibold leading-tight">${palavra}<br>${formData.segmento}</p>
+              </div>
+            `).join('')}
+          </div>
+          <p class="text-sm text-slate-400 mt-4">
+            Conceitos visuais para suas redes sociais, alinhados com sua identidade ${formData.moderno}.
+          </p>
+        </div>
+
+        <div class="bg-slate-700/30 border border-purple-500/20 rounded-2xl p-6 hover:scale-105 transition-transform relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-cyan-500"></div>
+          <h3 class="flex items-center gap-3 text-xl font-bold mb-6 text-purple-400">
+            <i class="fas fa-comment-alt"></i>
+            Legendas & Hashtags
+          </h3>
+          <ul class="space-y-3">
+            <li class="pl-6 py-3 border-b border-slate-600/50 relative before:content-['▸'] before:absolute before:left-0 before:text-purple-400 before:font-bold before:text-lg">
+              Inovação que transforma o futuro digital #${formData.nome.replace(/\s+/g, '')}
+            </li>
+            <li class="pl-6 py-3 border-b border-slate-600/50 relative before:content-['▸'] before:absolute before:left-0 before:text-purple-400 before:font-bold before:text-lg">
+              Soluções inteligentes para um mundo conectado #${formData.nome.replace(/\s+/g, '')}
+            </li>
+            <li class="pl-6 py-3 relative before:content-['▸'] before:absolute before:left-0 before:text-purple-400 before:font-bold before:text-lg">
+              Excelência em cada detalhe #Qualidade #${formData.segmento}
+            </li>
+          </ul>
+        </div>
+      `;
+      
+      document.getElementById('resultsContent').innerHTML = resultsHTML;
+      resultsScreen.classList.remove('hidden');
+    }
+    
+    function resetForm() {
+      brandForm.reset();
+      navigateToStep(1);
+      document.querySelectorAll('.form-error').forEach(error => error.classList.add('hidden'));
+      document.querySelectorAll('input, select, textarea').forEach(input => input.classList.remove('invalid'));
+    }
+    
+    // Accessibility - ESC key closes modals
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (!formSection.classList.contains('hidden')) {
+          formSection.classList.add('hidden');
+          landingPage.classList.remove('hidden');
+        }
+        if (!resultsScreen.classList.contains('hidden')) {
+          resultsScreen.classList.add('hidden');
+          landingPage.classList.remove('hidden');
+        }
+      }
     });
   </script>
 </body>
