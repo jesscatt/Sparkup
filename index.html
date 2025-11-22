@@ -456,139 +456,334 @@
       </div>
     </div>
   </div>
-function generateBrand() {
-  // Coletando os dados do formulário
-  formData = {
-    nome: document.getElementById('nome').value,
-    segmento: document.getElementById('segmento').value,
-    palavras: document.getElementById('palavras').value,
-    cores_sim: document.getElementById('cores_sim').value,
-    cores_nao: document.getElementById('cores_nao').value,
-    tom: document.getElementById('tom').value,
-    estilo: document.getElementById('estilo').value,
-    moderno: document.getElementById('moderno').value,
-    publico: document.getElementById('publico').value,
-    objetivo: document.getElementById('objetivo').value,
-    inspiracao: document.getElementById('inspiracao').value,
-    elementos: document.getElementById('elementos').value
-  };
-  
-  // Mostrar carregamento
-  formSection.classList.add('hidden');
-  loadingScreen.classList.remove('hidden');
+  <script>
+    // State
+    let currentStep = 1;
+    let formData = {};
 
-  // Simular processamento da IA
-  setTimeout(() => {
-    loadingScreen.classList.add('hidden');
-    showResults();
-  }, 3000);  // Simula a geração dos resultados após 3 segundos
-}
-
-function showResults() {
-  document.getElementById('resultBrandName').textContent = formData.nome;
-
-  // Verificar se o campo de cores foi preenchido
-  let colors = formData.cores_sim.trim();
-  if (colors === '') {
-    // Gerar cores aleatórias se o campo estiver vazio
-    colors = generateRandomColors(5);
-  } else {
-    // Se o cliente forneceu as cores, dividir e limitar a 5
-    colors = colors.split(',').map(c => c.trim()).slice(0, 5);
-  }
-
-  // Processando as palavras-chave
-  const palavras = formData.palavras.split(',').map(p => p.trim()).slice(0, 3);
-
-  // Montando o HTML dos resultados
-  const resultsHTML = `
-    <!-- Paleta de Cores -->
-    <div class="bg-slate-700/30 border border-purple-500/20 rounded-2xl p-6 hover:scale-105 transition-transform relative overflow-hidden">
-      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-cyan-500"></div>
-      <h3 class="flex items-center gap-3 text-xl font-bold mb-6 text-purple-400">
-        <i class="fas fa-palette"></i>
-        Paleta de Cores
-      </h3>
-      <div class="flex gap-4 mb-4 flex-wrap">
-        ${colors.map(color => `
-          <div class="relative w-16 h-16 rounded-xl shadow-lg hover:scale-110 transition-transform cursor-pointer group" style="background-color: ${color}">
-            <span class="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-xs p-1 text-center rounded-b-xl opacity-0 group-hover:opacity-100 transition-opacity">
-              ${color}
-            </span>
+    // Elements
+    const landingPage = document.getElementById('landingPage');
+    const formSection = document.getElementById('formSection');
+    const loadingScreen = document.getElementById('loadingScreen');
+    const resultsScreen = document.getElementById('resultsScreen');
+    
+    const startBtn = document.getElementById('startBtn');
+    const closeFormBtn = document.getElementById('closeFormBtn');
+    const closeResultsBtn = document.getElementById('closeResultsBtn');
+    const newBrandBtn = document.getElementById('newBrandBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    
+    const brandForm = document.getElementById('brandForm');
+    const progressBar = document.getElementById('progressBar');
+    
+    // Initialize particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const colors = ['#8b5cf6', '#06b6d4', '#a855f7', '#10b981', '#f59e0b'];
+      
+      for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle', 'animate-float');
+        
+        const size = Math.random() * 5 + 2;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.opacity = Math.random() * 0.7 + 0.1;
+        particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+        
+        particlesContainer.appendChild(particle);
+      }
+    }
+    
+    createParticles();
+    
+    // Event Listeners
+    startBtn.addEventListener('click', () => {
+      landingPage.classList.add('hidden');
+      formSection.classList.remove('hidden');
+    });
+    
+    closeFormBtn.addEventListener('click', () => {
+      formSection.classList.add('hidden');
+      landingPage.classList.remove('hidden');
+    });
+    
+    closeResultsBtn.addEventListener('click', () => {
+      resultsScreen.classList.add('hidden');
+      landingPage.classList.remove('hidden');
+    });
+    
+    newBrandBtn.addEventListener('click', () => {
+      resultsScreen.classList.add('hidden');
+      formSection.classList.remove('hidden');
+      resetForm();
+    });
+    
+    downloadBtn.addEventListener('click', () => {
+      alert('Funcionalidade de download será implementada em breve!');
+    });
+    
+    // Navigation
+    document.getElementById('nextToStep2').addEventListener('click', () => {
+      if (validateStep(1)) navigateToStep(2);
+    });
+    
+    document.getElementById('nextToStep3').addEventListener('click', () => {
+      if (validateStep(2)) navigateToStep(3);
+    });
+    
+    document.getElementById('nextToStep4').addEventListener('click', () => {
+      if (validateStep(3)) navigateToStep(4);
+    });
+    
+    document.getElementById('backToStep1').addEventListener('click', () => navigateToStep(1));
+    document.getElementById('backToStep2').addEventListener('click', () => navigateToStep(2));
+    document.getElementById('backToStep3').addEventListener('click', () => navigateToStep(3));
+    
+    brandForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (validateStep(4)) {
+        generateBrand();
+      }
+    });
+    
+    function navigateToStep(step) {
+      // Hide all steps
+      document.querySelectorAll('.form-step').forEach(s => s.classList.add('hidden'));
+      document.getElementById(`step${step}`).classList.remove('hidden');
+      
+      // Update progress indicators
+      const indicators = document.querySelectorAll('.step-indicator');
+      const labels = document.querySelectorAll('#progressSteps span');
+      
+      indicators.forEach((indicator, index) => {
+        const stepNum = index + 1;
+        if (stepNum < step) {
+          indicator.className = 'step-indicator w-10 h-10 rounded-full flex items-center justify-center font-bold mb-2 transition-all duration-300 bg-green-500 text-white border-2 border-green-500';
+          indicator.innerHTML = '<i class="fas fa-check"></i>';
+        } else if (stepNum === step) {
+          indicator.className = 'step-indicator w-10 h-10 rounded-full flex items-center justify-center font-bold mb-2 transition-all duration-300 bg-purple-500 text-white border-2 border-purple-500 shadow-lg shadow-purple-500/50';
+          indicator.textContent = stepNum;
+        } else {
+          indicator.className = 'step-indicator w-10 h-10 rounded-full flex items-center justify-center font-bold mb-2 transition-all duration-300 bg-slate-600 text-slate-400 border-2 border-slate-500';
+          indicator.textContent = stepNum;
+        }
+      });
+      
+      labels.forEach((label, index) => {
+        if (index === step - 1) {
+          label.classList.remove('text-slate-400');
+          label.classList.add('text-purple-500', 'font-semibold');
+        } else {
+          label.classList.remove('text-purple-500', 'font-semibold');
+          label.classList.add('text-slate-400');
+        }
+      });
+      
+      // Update progress bar
+      const progress = ((step - 1) / 3) * 100;
+      progressBar.style.width = `${progress}%`;
+      
+      currentStep = step;
+    }
+    
+    function validateStep(step) {
+      let isValid = true;
+      
+      function showError(fieldId) {
+        document.getElementById(fieldId).classList.add('invalid');
+        document.getElementById(`${fieldId}Error`).classList.remove('hidden');
+        isValid = false;
+      }
+      
+      function hideError(fieldId) {
+        document.getElementById(fieldId).classList.remove('invalid');
+        document.getElementById(`${fieldId}Error`).classList.add('hidden');
+      }
+      
+      if (step === 1) {
+        const nome = document.getElementById('nome');
+        const segmento = document.getElementById('segmento');
+        const palavras = document.getElementById('palavras');
+        
+        nome.value.trim() ? hideError('nome') : showError('nome');
+        segmento.value.trim() ? hideError('segmento') : showError('segmento');
+        
+        if (palavras.value.trim() && palavras.value.split(',').length >= 3) {
+          hideError('palavras');
+        } else {
+          showError('palavras');
+        }
+      }
+      
+      if (step === 2) {
+        const cores_sim = document.getElementById('cores_sim');
+        const cores_nao = document.getElementById('cores_nao');
+        const tom = document.getElementById('tom');
+        const estilo = document.getElementById('estilo');
+        
+        cores_sim.value.trim() ? hideError('cores_sim') : showError('cores_sim');
+        cores_nao.value.trim() ? hideError('cores_nao') : showError('cores_nao');
+        tom.value ? hideError('tom') : showError('tom');
+        estilo.value ? hideError('estilo') : showError('estilo');
+      }
+      
+      if (step === 3) {
+        const moderno = document.getElementById('moderno');
+        const publico = document.getElementById('publico');
+        const objetivo = document.getElementById('objetivo');
+        
+        moderno.value ? hideError('moderno') : showError('moderno');
+        publico.value.trim() ? hideError('publico') : showError('publico');
+        objetivo.value ? hideError('objetivo') : showError('objetivo');
+      }
+      
+      return isValid;
+    }
+    
+    function generateBrand() {
+      // Collect form data
+      formData = {
+        nome: document.getElementById('nome').value,
+        segmento: document.getElementById('segmento').value,
+        palavras: document.getElementById('palavras').value,
+        cores_sim: document.getElementById('cores_sim').value,
+        cores_nao: document.getElementById('cores_nao').value,
+        tom: document.getElementById('tom').value,
+        estilo: document.getElementById('estilo').value,
+        moderno: document.getElementById('moderno').value,
+        publico: document.getElementById('publico').value,
+        objetivo: document.getElementById('objetivo').value,
+        inspiracao: document.getElementById('inspiracao').value,
+        elementos: document.getElementById('elementos').value
+      };
+      
+      // Show loading
+      formSection.classList.add('hidden');
+      loadingScreen.classList.remove('hidden');
+      
+      // Simulate AI processing
+      setTimeout(() => {
+        loadingScreen.classList.add('hidden');
+        showResults();
+      }, 3000);
+    }
+    
+    function showResults() {
+      document.getElementById('resultBrandName').textContent = formData.nome;
+      
+      const colors = formData.cores_sim.split(',').map(c => c.trim()).slice(0, 5);
+      const palavras = formData.palavras.split(',').map(p => p.trim()).slice(0, 3);
+      
+      const resultsHTML = `
+        <div class="bg-slate-700/30 border border-purple-500/20 rounded-2xl p-6 hover:scale-105 transition-transform relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-cyan-500"></div>
+          <h3 class="flex items-center gap-3 text-xl font-bold mb-6 text-purple-400">
+            <i class="fas fa-palette"></i>
+            Paleta de Cores
+          </h3>
+          <div class="flex gap-4 mb-4 flex-wrap">
+            ${colors.map(color => `
+              <div class="relative w-16 h-16 rounded-xl shadow-lg hover:scale-110 transition-transform cursor-pointer group" style="background-color: ${color}">
+                <span class="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-xs p-1 text-center rounded-b-xl opacity-0 group-hover:opacity-100 transition-opacity">
+                  ${color}
+                </span>
+              </div>
+            `).join('')}
           </div>
-        `).join('')}
-      </div>
-      <p class="text-sm text-slate-400">
-        Uma paleta ${formData.estilo} que combina ${formData.tom}, perfeita para ${formData.segmento.toLowerCase()}.
-      </p>
-    </div>
-
-    <!-- Tipografia -->
-    <div class="bg-slate-700/30 border border-purple-500/20 rounded-2xl p-6 hover:scale-105 transition-transform relative overflow-hidden">
-      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-cyan-500"></div>
-      <h3 class="flex items-center gap-3 text-xl font-bold mb-6 text-purple-400">
-        <i class="fas fa-font"></i>
-        Tipografia
-      </h3>
-      <div class="space-y-4">
-        <div class="bg-slate-700/50 rounded-xl p-4 text-center">
-          <p class="text-3xl font-black text-purple-400">${formData.nome}</p>
-          <p class="text-xs text-slate-400 mt-2">Título Principal</p>
+          <p class="text-sm text-slate-400">
+            Uma paleta ${formData.estilo} que combina ${formData.tom}, perfeita para ${formData.segmento.toLowerCase()}.
+          </p>
         </div>
-        <div class="bg-slate-700/50 rounded-xl p-4 text-center">
-          <p class="text-xl">${formData.segmento}</p>
-          <p class="text-xs text-slate-400 mt-2">Texto Corpo</p>
-        </div>
-      </div>
-      <p class="text-sm text-slate-400 mt-4">
-        Combinação perfeita entre modernidade e legibilidade para todos os materiais.
-      </p>
-    </div>
 
-    <!-- Posts Sugeridos -->
-    <div class="bg-slate-700/30 border border-purple-500/20 rounded-2xl p-6 hover:scale-105 transition-transform relative overflow-hidden">
-      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-cyan-500"></div>
-      <h3 class="flex items-center gap-3 text-xl font-bold mb-6 text-purple-400">
-        <i class="fas fa-hashtag"></i>
-        Posts Sugeridos
-      </h3>
-      <div class="grid grid-cols-3 gap-3">
-        ${palavras.map(palavra => `
-          <div class="aspect-square bg-gradient-to-br from-purple-500/20 to-cyan-500/20 rounded-xl flex items-center justify-center text-center p-3 hover:scale-105 transition-transform border border-purple-500/30">
-            <p class="text-sm font-semibold leading-tight">${palavra}<br>${formData.segmento}</p>
+        <div class="bg-slate-700/30 border border-purple-500/20 rounded-2xl p-6 hover:scale-105 transition-transform relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-cyan-500"></div>
+          <h3 class="flex items-center gap-3 text-xl font-bold mb-6 text-purple-400">
+            <i class="fas fa-font"></i>
+            Tipografia
+          </h3>
+          <div class="space-y-4">
+            <div class="bg-slate-700/50 rounded-xl p-4 text-center">
+              <p class="text-3xl font-black text-purple-400">${formData.nome}</p>
+              <p class="text-xs text-slate-400 mt-2">Título Principal</p>
+            </div>
+            <div class="bg-slate-700/50 rounded-xl p-4 text-center">
+              <p class="text-xl">${formData.segmento}</p>
+              <p class="text-xs text-slate-400 mt-2">Texto Corpo</p>
+            </div>
           </div>
-        `).join('')}
-      </div>
-      <p class="text-sm text-slate-400 mt-4">
-        Conceitos visuais para suas redes sociais, alinhados com sua identidade ${formData.moderno}.
-      </p>
-    </div>
+          <p class="text-sm text-slate-400 mt-4">
+            Combinação perfeita entre modernidade e legibilidade para todos os materiais.
+          </p>
+        </div>
 
-    <!-- Legendas & Hashtags -->
-    <div class="bg-slate-700/30 border border-purple-500/20 rounded-2xl p-6 hover:scale-105 transition-transform relative overflow-hidden">
-      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-cyan-500"></div>
-      <h3 class="flex items-center gap-3 text-xl font-bold mb-6 text-purple-400">
-        <i class="fas fa-comment-alt"></i>
-        Legendas & Hashtags
-      </h3>
-      <ul class="space-y-3">
-        <li class="pl-6 py-3 border-b border-slate-600/50 relative before:content-['▸'] before:absolute before:left-0 before:text-purple-400 before:font-bold before:text-lg">
-          Inovação que transforma o futuro digital #${formData.nome.replace(/\s+/g, '')}
-        </li>
-        <li class="pl-6 py-3 border-b border-slate-600/50 relative before:content-['▸'] before:absolute before:left-0 before:text-purple-400 before:font-bold before:text-lg">
-          Soluções inteligentes para um mundo conectado #${formData.nome.replace(/\s+/g, '')}
-        </li>
-        <li class="pl-6 py-3 relative before:content-['▸'] before:absolute before:left-0 before:text-purple-400 before:font-bold before:text-lg">
-          Excelência em cada detalhe #Qualidade #${formData.segmento}
-        </li>
-      </ul>
-    </div>
-  `;
-  
-  // Inserir os resultados no DOM
-  document.getElementById('resultsContent').innerHTML = resultsHTML;
-  resultsScreen.classList.remove('hidden');
-}
+        <div class="bg-slate-700/30 border border-purple-500/20 rounded-2xl p-6 hover:scale-105 transition-transform relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-cyan-500"></div>
+          <h3 class="flex items-center gap-3 text-xl font-bold mb-6 text-purple-400">
+            <i class="fas fa-hashtag"></i>
+            Posts Sugeridos
+          </h3>
+          <div class="grid grid-cols-3 gap-3">
+            ${palavras.map(palavra => `
+              <div class="aspect-square bg-gradient-to-br from-purple-500/20 to-cyan-500/20 rounded-xl flex items-center justify-center text-center p-3 hover:scale-105 transition-transform border border-purple-500/30">
+                <p class="text-sm font-semibold leading-tight">${palavra}<br>${formData.segmento}</p>
+              </div>
+            `).join('')}
+          </div>
+          <p class="text-sm text-slate-400 mt-4">
+            Conceitos visuais para suas redes sociais, alinhados com sua identidade ${formData.moderno}.
+          </p>
+        </div>
+
+        <div class="bg-slate-700/30 border border-purple-500/20 rounded-2xl p-6 hover:scale-105 transition-transform relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-cyan-500"></div>
+          <h3 class="flex items-center gap-3 text-xl font-bold mb-6 text-purple-400">
+            <i class="fas fa-comment-alt"></i>
+            Legendas & Hashtags
+          </h3>
+          <ul class="space-y-3">
+            <li class="pl-6 py-3 border-b border-slate-600/50 relative before:content-['▸'] before:absolute before:left-0 before:text-purple-400 before:font-bold before:text-lg">
+              Inovação que transforma o futuro digital #${formData.nome.replace(/\s+/g, '')}
+            </li>
+            <li class="pl-6 py-3 border-b border-slate-600/50 relative before:content-['▸'] before:absolute before:left-0 before:text-purple-400 before:font-bold before:text-lg">
+              Soluções inteligentes para um mundo conectado #${formData.nome.replace(/\s+/g, '')}
+            </li>
+            <li class="pl-6 py-3 relative before:content-['▸'] before:absolute before:left-0 before:text-purple-400 before:font-bold before:text-lg">
+              Excelência em cada detalhe #Qualidade #${formData.segmento}
+            </li>
+          </ul>
+        </div>
+      `;
+      
+      document.getElementById('resultsContent').innerHTML = resultsHTML;
+      resultsScreen.classList.remove('hidden');
+    }
+    
+    function resetForm() {
+      brandForm.reset();
+      navigateToStep(1);
+      document.querySelectorAll('.form-error').forEach(error => error.classList.add('hidden'));
+      document.querySelectorAll('input, select, textarea').forEach(input => input.classList.remove('invalid'));
+    }
+    
+    // Accessibility - ESC key closes modals
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (!formSection.classList.contains('hidden')) {
+          formSection.classList.add('hidden');
+          landingPage.classList.remove('hidden');
+        }
+        if (!resultsScreen.classList.contains('hidden')) {
+          resultsScreen.classList.add('hidden');
+          landingPage.classList.remove('hidden');
+        }
+      }
+    });
+  </script>
 
 </body>
 </html>
