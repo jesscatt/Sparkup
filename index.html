@@ -155,33 +155,42 @@
   <div class="glow-effect w-[200px] h-[200px]" style="top: 50%; left: 50%; transform: translate(-50%, -50%); background: radial-gradient(circle, #a855f7 0%, transparent 70%); animation: moveGlow 20s infinite alternate ease-in-out -5s;"></div>
 
   <!-- Landing Page -->
-  <div id="landingPage" class="relative min-h-screen flex items-center justify-center overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70 z-10"></div>
-    
-    <div class="relative z-20 text-center max-w-4xl mx-auto px-6 animate-fade-in-up">
-      <h1 class="text-7xl md:text-8xl font-black mb-8 gradient-text animate-float animate-glow tracking-tight">
-        BrandAI
-      </h1>
-      
-      <div class="relative mb-12 group">
-        <div class="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-cyan-500/20 to-purple-400/20 blur-xl rounded-3xl"></div>
-        <div class="relative backdrop-blur-xl bg-slate-800/50 border border-purple-500/30 rounded-3xl p-8 overflow-hidden">
-          <p class="text-xl md:text-2xl text-slate-100 leading-relaxed relative z-10">
-            Transforme sua visão em identidade visual com o poder da Inteligência Artificial. 
-            Crie uma marca única e memorável em minutos.
-          </p>
-        </div>
+ <div id="landingPage" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70 z-10"></div>
+
+  <div class="relative z-20 text-center max-w-4xl mx-auto px-6 animate-fade-in-up">
+
+    <!-- LOGO ACIMA DO TÍTULO -->
+    <img 
+      src="/mnt/data/Logo (4).png" 
+      alt="Logo"
+      class="mx-auto w-32 md:w-40 mb-6 drop-shadow-2xl animate-fade-in"
+    />
+
+    <h1 class="text-7xl md:text-8xl font-black mb-8 gradient-text animate-float animate-glow tracking-tight">
+      BrandAI
+    </h1>
+
+    <div class="relative mb-12 group">
+      <div class="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-cyan-500/20 to-purple-400/20 blur-xl rounded-3xl"></div>
+      <div class="relative backdrop-blur-xl bg-slate-800/50 border border-purple-500/30 rounded-3xl p-8 overflow-hidden">
+        <p class="text-xl md:text-2xl text-slate-100 leading-relaxed relative z-10">
+          Transforme sua visão em identidade visual com o poder da Inteligência Artificial. 
+          Crie uma marca única e memorável em minutos.
+        </p>
       </div>
-      
-      <button
-        id="startBtn"
-        class="text-lg px-12 py-7 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-600 hover:to-cyan-600 shadow-lg hover:shadow-xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 animate-pulse-glow border border-purple-500/50 font-semibold"
-      >
-        <i class="fas fa-rocket mr-2"></i>
-        Começar Agora
-      </button>
     </div>
+
+    <button
+      id="startBtn"
+      class="text-lg px-12 py-7 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-purple-600 hover:to-cyan-600 shadow-lg hover:shadow-xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 animate-pulse-glow border border-purple-500/50 font-semibold"
+    >
+      <i class="fas fa-rocket mr-2"></i>
+      Começar Agora
+    </button>
   </div>
+</div>
+
 
   <!-- Form Section -->
   <div id="formSection" class="hidden fixed inset-0 bg-black/95 backdrop-blur-sm z-50 overflow-y-auto p-4 md:p-6 animate-fade-in">
